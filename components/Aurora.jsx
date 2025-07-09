@@ -206,10 +206,5 @@ export default function Aurora(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
-  return (
-    <div
-      ref={ctnDom}
-      className="absolute inset-0 -z-10 w-full h-full min-h-screen"
-    />
-  );
+  return <div ref={ctnDom} className="fixed inset-0 -z-10 w-full h-full" />;
 }
