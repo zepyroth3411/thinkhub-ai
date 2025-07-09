@@ -100,6 +100,13 @@ export default function Home() {
               Try it
             </button>
           </div>
+          <div className="border border-white bg-opacity-10 backdrop-blur-md rounded-lg p-4">
+            <h3 className="text-xl font-semibold mb-2">Spam Detector</h3>
+            <p className="mb-4">Dataset: spam.csv</p>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+              Try it
+            </button>
+          </div>
         </div>
       </section>
 

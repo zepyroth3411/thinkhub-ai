@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/router";
 import {
   motion,
   useMotionValue,
@@ -116,6 +116,7 @@ export default function Dock({
 }) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
+  const router = useRouter();
 
   const maxHeight = useMemo(
     () => Math.max(dockHeight, magnification + magnification / 2 + 4),
@@ -146,7 +147,13 @@ export default function Dock({
         {items.map((item, index) => (
           <DockItem
             key={index}
-            onClick={item.onClick}
+            onClick={() => {
+              if (item.href) {
+                router.push(item.href);
+              } else if (item.onClick) {
+                item.onClick();
+              }
+            }}
             className={item.className}
             mouseX={mouseX}
             spring={spring}

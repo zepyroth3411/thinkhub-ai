@@ -9,22 +9,17 @@ const dockItems = [
   {
     icon: <VscHome size={18} />,
     label: "Home",
-    onClick: () =>
-      document.getElementById("home").scrollIntoView({ behavior: "smooth" }),
+    href: "/",
   },
   {
     icon: <VscArchive size={18} />,
     label: "About",
-    onClick: () =>
-      document.getElementById("about").scrollIntoView({ behavior: "smooth" }),
+    href: "/about",
   },
   {
     icon: <VscAccount size={18} />,
     label: "Models",
-    onClick: () =>
-      document
-        .getElementById("modelsAI")
-        .scrollIntoView({ behavior: "smooth" }),
+    href: "/models",
   },
   {
     icon: <VscSettingsGear size={18} />,
