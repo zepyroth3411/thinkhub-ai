@@ -170,6 +170,12 @@ export default function Aurora(props) {
 
     const mesh = new Mesh(gl, { geometry, program });
     ctn.appendChild(gl.canvas);
+    gl.canvas.style.position = "absolute";
+    gl.canvas.style.top = "0";
+    gl.canvas.style.left = "0";
+    gl.canvas.style.width = "100%";
+    gl.canvas.style.height = "100%";
+    gl.canvas.style.zIndex = "-10";
 
     let animateId = 0;
     const update = (t) => {
@@ -200,5 +206,10 @@ export default function Aurora(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
-  return <div ref={ctnDom} className="absolute inset-0 -z-10 w-full h-full" />;
+  return (
+    <div
+      ref={ctnDom}
+      className="absolute inset-0 -z-10 w-full h-full min-h-screen"
+    />
+  );
 }

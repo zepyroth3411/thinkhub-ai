@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/button": "^2.2.22",
     "framer-motion": "^12.23.1",
     "next": "15.3.5",
     "ogl": "^1.0.11",
