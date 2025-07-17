@@ -5,7 +5,7 @@ const teamProfiles = [
     handle: "brandon_torres",
     status: "Online",
     contactText: "Contact",
-    avatarUrl: "/avatars/brandon.jpg",
+    avatarUrl: "/user.png", 
   },
   {
     name: "Edgar Villalobos",
@@ -13,7 +13,7 @@ const teamProfiles = [
     handle: "edgar_villalobos",
     status: "Online",
     contactText: "Contact",
-    avatarUrl: "/avatars/edgar.jpg",
+    avatarUrl: "/user.png", 
   },
 ];
 

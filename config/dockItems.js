@@ -21,11 +21,6 @@ const dockItems = [
     label: "Models",
     href: "/models",
   },
-  {
-    icon: <VscSettingsGear size={18} />,
-    label: "Settings",
-    onClick: () => alert("Settings!"),
-  },
 ];
 
 export default dockItems;
