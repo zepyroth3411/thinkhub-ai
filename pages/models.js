@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import DockNavbar from "@/components/DockNavbar";
@@ -37,5 +38,14 @@ export default function Models() {
   <DockNavbar items={dockItems} />
 </main>
 
+=======
+import ThinkHubEmotionModelCard from "@/components/ThinkHubEmotionModelCard";
+
+export default function ModelsPage() {
+  return (
+    <div className="p-4">
+      <ThinkHubEmotionModelCard />
+    </div>
+>>>>>>> 9c47d487bcfcc8b035d681b350b034c08afd1564
   );
 }
