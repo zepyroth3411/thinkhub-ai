@@ -1,9 +1,9 @@
-<<<<<<< HEAD
 "use client";
 
 import DockNavbar from "@/components/DockNavbar";
 import dockItems from "@/config/dockItems";
 import Aurora from "@/components/Aurora";
+import ModelCard from "@/components/ModelCard";
 
 export default function Models() {
   return (
@@ -27,6 +27,14 @@ export default function Models() {
     {/* Models Grid */}
     <section className="py-8 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
       {/* Cards aquí */}
+            <ModelCard>
+              <p className="text-lg">Holis</p>
+            </ModelCard>
+            <ModelCard></ModelCard>
+            <ModelCard></ModelCard>
+            <ModelCard></ModelCard>
+            <ModelCard></ModelCard>
+            <ModelCard></ModelCard>
     </section>
   </div>
 
@@ -37,15 +45,5 @@ export default function Models() {
 
   <DockNavbar items={dockItems} />
 </main>
-
-=======
-import ThinkHubEmotionModelCard from "@/components/ThinkHubEmotionModelCard";
-
-export default function ModelsPage() {
-  return (
-    <div className="p-4">
-      <ThinkHubEmotionModelCard />
-    </div>
->>>>>>> 9c47d487bcfcc8b035d681b350b034c08afd1564
   );
 }
