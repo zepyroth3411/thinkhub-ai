@@ -5,6 +5,7 @@ import dockItems from "@/config/dockItems";
 import Aurora from "@/components/Aurora";
 import ModelCard from "@/components/ModelCard";
 import EmotionModal from "@/components/EmotionModal";
+import EmotionRetrainModal from "@/components/EmotionRetrainModal";
 
 export default function Models() {
   return (
@@ -31,7 +32,9 @@ export default function Models() {
             <ModelCard title= "Emotion Analizer">
               <EmotionModal/>
             </ModelCard>
-            <ModelCard></ModelCard>
+            <ModelCard title=" Retrain analizer ">
+              <EmotionRetrainModal/>
+            </ModelCard>
             <ModelCard></ModelCard>
             <ModelCard></ModelCard>
             <ModelCard></ModelCard>
