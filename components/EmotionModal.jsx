@@ -18,15 +18,15 @@ const handlePredict = async () => {
   console.log("📤 Payload enviado al backend:", payload); // 👈 DEBUG aquí
 
   try {
-    const response = await axios.post(
-      "http://192.168.100.36:5000/api/emotion/predict",
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
+      const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE}/api/emotion/predict`,
+    payload,
+    {
+      headers: {
+        "Content-Type": "application/json"
       }
-    );
+    }
+  );
     console.log("✅ Respuesta del backend:", response.data); // 👈 DEBUG aquí
     setResult(response.data);
   } catch (error) {
