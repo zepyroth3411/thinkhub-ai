@@ -4,6 +4,7 @@ import DockNavbar from "@/components/DockNavbar";
 import dockItems from "@/config/dockItems";
 import Aurora from "@/components/Aurora";
 import ModelCard from "@/components/ModelCard";
+import EmotionModal from "@/components/EmotionModal";
 
 export default function Models() {
   return (
@@ -27,8 +28,8 @@ export default function Models() {
     {/* Models Grid */}
     <section className="py-8 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
       {/* Cards aquí */}
-            <ModelCard>
-              <p className="text-lg">Holis</p>
+            <ModelCard title= "Emotion Analizer">
+              <EmotionModal/>
             </ModelCard>
             <ModelCard></ModelCard>
             <ModelCard></ModelCard>
