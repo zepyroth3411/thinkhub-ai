@@ -7,7 +7,10 @@ import ModelCard from "@/components/ModelCard";
 import EmotionModal from "@/components/EmotionModal";
 import EmotionRetrainModal from "@/components/EmotionRetrainModal";
 import ModelAccordionModal from "@/components/ModelAccordion";
+import SpamModal from "@/components/SpamModal";
+import SpamRetrainModal from "@/components/SpamRetrainModal";
 import { RiEmotionLaughFill } from "react-icons/ri";
+import { LuMessageCircleCode } from "react-icons/lu";
 
 export default function Models() {
   return (
@@ -39,8 +42,13 @@ export default function Models() {
             AccordionComponent={EmotionRetrainModal}
             accordionLabel="Open Retrain Tool"
           />
-          <ModelCard></ModelCard>
-          <ModelCard></ModelCard>
+          <ModelAccordionModal
+            title="Spam Detector"
+            icon={<LuMessageCircleCode />}
+            MainComponent={SpamModal}
+            AccordionComponent={SpamRetrainModal}
+            accordionLabel="Open Retrain Tool"
+          />
           <ModelCard></ModelCard>
           <ModelCard></ModelCard>
           <ModelCard></ModelCard>
