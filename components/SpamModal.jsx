@@ -22,7 +22,7 @@ export default function SpamModal() {
       );
       setResult(response.data);
     } catch (error) {
-      console.error("❌ Error al predecir:", error);
+      console.error("❌ Error while predicting:", error);
     } finally {
       setLoading(false);
     }
@@ -34,7 +34,7 @@ export default function SpamModal() {
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={4}
-        placeholder="Escribe el mensaje a evaluar..."
+        placeholder="Type the message to analyze..."
         className="w-full rounded-lg p-3 text-white bg-white/10 backdrop-blur-[10px] border border-white/20 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30"
       />
       <button
@@ -42,19 +42,21 @@ export default function SpamModal() {
         disabled={loading}
         className="w-full bg-white/20 backdrop-blur-[10px] border border-white/30 px-4 py-2 rounded-lg text-white font-semibold hover:bg-white/30 transition disabled:opacity-50"
       >
-        {loading ? "Evaluando..." : "Detectar Spam"}
+        {loading ? "Analyzing..." : "Detect Spam"}
       </button>
 
       {result && (
         <div
-          className={`mt-4 px-4 py-2 rounded-lg text-white text-center w-full ${
+          className={`mt-4 px-4 py-3 rounded-lg text-white text-center w-full ${
             result.prediction === "Spam"
               ? "bg-red-500/30 border border-red-500"
               : "bg-green-500/30 border border-green-500"
           }`}
         >
           <MdOutlineMarkEmailUnread className="text-3xl mx-auto mb-2" />
-          <p className="text-lg font-bold">{result.prediction}</p>
+          <p className="text-lg font-bold">
+            {result.prediction === "Spam" ? "Spam Detected" : "Not Spam"}
+          </p>
         </div>
       )}
     </div>
