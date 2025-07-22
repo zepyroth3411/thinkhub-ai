@@ -2,54 +2,63 @@
 
 import { useState } from "react";
 import axios from "axios";
-import { MdSummarize } from "react-icons/md";
+import { MdVolumeUp } from "react-icons/md";
+import useTextToSpeech from "@/src/hooks/useTextToSpeech";
 
 export default function SummarizerModal() {
+  const { speak } = useTextToSpeech();
   const [text, setText] = useState("");
-  const [summary, setSummary] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState("");
 
   const handleSummarize = async () => {
     if (!text.trim()) return;
 
-    setLoading(true);
-    setSummary(null);
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE}/api/summarizer/predict`,
         { text },
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
-      setSummary(response.data.summary);
+      setSummary(response.data.summary || "No summary generated");
     } catch (error) {
-      console.error("❌ Error summarizing text:", error);
+      console.error("❌ Error summarizing:", error);
       setSummary("Error summarizing text.");
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col gap-4">
       <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        className="w-full rounded-md p-4 bg-zinc-800 text-white placeholder-gray-400"
         rows={6}
         placeholder="Paste or type your text here to summarize..."
-        className="w-full rounded-lg p-3 text-white bg-white/10 backdrop-blur-[10px] border border-white/20 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
       />
       <button
         onClick={handleSummarize}
-        disabled={loading}
-        className="w-full bg-white/20 backdrop-blur-[10px] border border-white/30 px-4 py-2 rounded-lg text-white font-semibold hover:bg-white/30 transition disabled:opacity-50"
+        className="bg-zinc-700 hover:bg-zinc-600 text-white font-semibold py-2 px-4 rounded"
       >
-        {loading ? "Summarizing..." : "Summarize Text"}
+        Summarize Text
       </button>
 
       {summary && (
-        <div className="mt-4 px-4 py-2 rounded-lg text-white text-left w-full bg-indigo-500/20 border border-indigo-400">
-          <MdSummarize className="text-3xl mb-2" />
-          <p className="text-sm">{summary}</p>
+        <div className="bg-black/40 border border-white/10 rounded-md p-4 flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-bold text-white">Summary</h3>
+            <button
+              onClick={() => speak(summary, "en-US")}
+              className="text-white text-2xl hover:text-gray-300"
+              title="Listen"
+            >
+              <MdVolumeUp />
+            </button>
+          </div>
+          <p className="text-white/80">{summary}</p>
         </div>
       )}
     </div>
