@@ -9,8 +9,10 @@ import EmotionRetrainModal from "@/components/EmotionRetrainModal";
 import ModelAccordionModal from "@/components/ModelAccordion";
 import SpamModal from "@/components/SpamModal";
 import SpamRetrainModal from "@/components/SpamRetrainModal";
+import SummarizerModal from "@/components/SummarizerModal";
 import { RiEmotionLaughFill } from "react-icons/ri";
 import { LuMessageCircleCode } from "react-icons/lu";
+import { LuNotebookPen } from "react-icons/lu";
 
 export default function Models() {
   return (
@@ -49,7 +51,11 @@ export default function Models() {
             AccordionComponent={SpamRetrainModal}
             accordionLabel="Open Retrain Tool"
           />
-          <ModelCard></ModelCard>
+          <ModelAccordionModal
+            title="Text Summarizer"
+            icon={<LuNotebookPen />}
+            MainComponent={SummarizerModal}
+          />
           <ModelCard></ModelCard>
           <ModelCard></ModelCard>
         </section>
