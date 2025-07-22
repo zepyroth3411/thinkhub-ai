@@ -1,0 +1,724 @@
+{
+  "hyperparameters": {
+    "activation": {
+      "description": "Activation functions control how each neuron transforms its input. They introduce non-linearity, enabling deep networks to learn complex relationships.",
+      "tips": "ReLU is the standard for most hidden layers. Use leaky_relu if you encounter dead neurons.",
+      "comparison": "ReLU is efficient and prevents vanishing gradients. Tanh is centered and helps if your data is centered. Sigmoid is best for binary outputs, but not for deep hidden layers. Leaky ReLU prevents dead neurons.",
+      "example_questions": [
+        "Which activation function should I use?",
+        "What's the best activation for my model?",
+        "When to use tanh?",
+        "ReLU vs leaky ReLU?",
+        "Is sigmoid good for hidden layers?",
+        "How do activation functions affect learning?",
+        "Should I use relu or tanh?",
+        "Activation for deep learning"
+      ]
+    },
+    "relu": {
+      "description": "ReLU (Rectified Linear Unit) outputs zero for negative inputs and the input itself for positive values. It is efficient and helps prevent vanishing gradients.",
+      "tips": "Use for hidden layers unless you see a lot of dead neurons.",
+      "increase_effects": "Higher learning rates can cause some neurons to die (output always zero).",
+      "decrease_effects": "Lower learning rates make learning slower, but reduce risk of dead neurons.",
+      "comparison": "ReLU is more reliable and faster than sigmoid/tanh for deep networks.",
+      "example_questions": [
+        "What is ReLU?",
+        "Why use relu?",
+        "How does relu compare to sigmoid?",
+        "When not to use relu?"
+      ]
+    },
+    "tanh": {
+      "description": "Tanh squashes its output between -1 and 1, centering the data. It's sometimes used if your input data is zero-centered.",
+      "tips": "Try tanh in shallow networks or for specific tasks where data is centered.",
+      "comparison": "Tanh is centered (unlike sigmoid) but is more prone to vanishing gradients than relu.",
+      "example_questions": [
+        "When to use tanh?",
+        "Is tanh better than sigmoid?",
+        "Why not use tanh in deep networks?"
+      ]
+    },
+    "sigmoid": {
+      "description": "Sigmoid outputs values between 0 and 1. It's useful for binary outputs but not recommended for deep hidden layers due to vanishing gradients.",
+      "tips": "Use in output layer for binary classification.",
+      "comparison": "Slow to train in deep nets. Prefer relu or leaky relu for hidden layers.",
+      "example_questions": [
+        "What is sigmoid?",
+        "Sigmoid vs softmax?",
+        "Can I use sigmoid for hidden layers?"
+      ]
+    },
+    "leaky_relu": {
+      "description": "Leaky ReLU allows a small, non-zero gradient when the unit is not active, helping to avoid dead neurons.",
+      "tips": "Switch to leaky_relu if relu is causing dead neurons.",
+      "comparison": "Like relu, but outputs a small negative value for negative inputs (e.g., -0.01 * x).",
+      "example_questions": [
+        "What is leaky relu?",
+        "How is leaky relu different from relu?",
+        "Does leaky relu prevent dead neurons?"
+      ]
+    },
+    "optimizer": {
+      "description": "The optimizer determines how the model's weights are updated to minimize loss. Adam, SGD, and RMSprop are most common.",
+      "tips": "Start with Adam. Try SGD for research or to tune generalization. Use RMSprop if training is unstable.",
+      "comparison": "Adam adapts learning rates for each parameter and usually converges faster. SGD is simple but needs careful learning rate tuning. RMSprop adapts rates for each parameter and works well for recurrent or unstable data.",
+      "example_questions": [
+        "Which optimizer should I use?",
+        "Best optimizer for deep learning?",
+        "Difference between adam and sgd?",
+        "Is rmsprop better than adam?",
+        "When to use sgd?"
+      ]
+    },
+    "adam": {
+      "description": "Adam is an adaptive optimizer that adjusts learning rates for each parameter. Robust and little tuning needed.",
+      "tips": "Adam is a strong default for most models.",
+      "comparison": "Adam is less sensitive to initial learning rates than SGD.",
+      "example_questions": [
+        "Why use adam?",
+        "What makes adam better than sgd?",
+        "Is adam suitable for all models?"
+      ]
+    },
+    "sgd": {
+      "description": "SGD (Stochastic Gradient Descent) updates weights using random batches of data. Simple, often used in research.",
+      "tips": "Use momentum for better results. Tune learning rate carefully.",
+      "increase_effects": "High learning rate can cause divergence.",
+      "decrease_effects": "Low learning rate makes learning stable but slow.",
+      "comparison": "SGD may generalize better, but usually needs more tuning.",
+      "example_questions": [
+        "What is sgd?",
+        "SGD vs adam?",
+        "Is sgd outdated?",
+        "Should I use sgd with momentum?"
+      ]
+    },
+    "rmsprop": {
+      "description": "RMSprop adapts learning rates for each parameter based on recent gradient magnitudes. Good for oscillating or time-series data.",
+      "tips": "Try rmsprop if adam is unstable or if training loss fluctuates.",
+      "comparison": "RMSprop is like Adam but without momentum.",
+      "example_questions": [
+        "What is rmsprop?",
+        "When to use rmsprop?",
+        "RMSprop vs adam?"
+      ]
+    },
+    "loss": {
+      "description": "The loss function measures the difference between predicted and true values. Choose based on your label format.",
+      "tips": "Use categorical_crossentropy for one-hot encoded labels; sparse_categorical_crossentropy for integer labels.",
+      "comparison": "Both functions are for multi-class classification. Choice depends on how labels are encoded.",
+      "example_questions": [
+        "Which loss function should I use?",
+        "Difference between categorical and sparse categorical crossentropy?",
+        "What is loss in deep learning?",
+        "How to choose loss function for classification?"
+      ]
+    },
+    "categorical_crossentropy": {
+      "description": "For multi-class classification with one-hot encoded labels. Measures the distance between predicted and true probability distributions.",
+      "tips": "Ensure labels are one-hot encoded.",
+      "comparison": "Use sparse categorical crossentropy for integer labels.",
+      "example_questions": [
+        "When to use categorical_crossentropy?",
+        "Categorical crossentropy vs sparse?",
+        "What is one-hot encoding?"
+      ]
+    },
+    "sparse_categorical_crossentropy": {
+      "description": "For multi-class classification with integer labels (not one-hot).",
+      "tips": "Faster and easier for integer labels.",
+      "comparison": "Same math as categorical crossentropy if labels are formatted correctly.",
+      "example_questions": [
+        "When to use sparse categorical crossentropy?",
+        "Can I use integer labels?",
+        "Sparse vs categorical crossentropy?"
+      ]
+    },
+    "num_conv_layers": {
+      "description": "Number of convolutional layers in your model. More layers allow the network to extract more complex features, but increase risk of overfitting and training time.",
+      "tips": "Start with 2 or 3. Add more for complex data, but monitor overfitting.",
+      "increase_effects": "Can learn more abstract and high-level features, but training gets slower and risk of overfitting rises.",
+      "decrease_effects": "May underfit and miss important patterns if too few layers.",
+      "comparison": "Too few layers underfit; too many may overfit. Use validation accuracy to balance.",
+      "example_questions": [
+        "How many convolutional layers should I use?",
+        "What does increasing num_conv_layers do?",
+        "Should I add more conv layers?",
+        "Best number of conv layers?",
+        "How does num_conv_layers affect performance?"
+      ]
+    },
+    "base_filters": {
+      "description": "Number of filters in the first convolutional layer. More filters capture more features from the input image.",
+      "tips": "Try 32 or 64 as a starting point. Increase if model underfits.",
+      "increase_effects": "More features detected, higher memory and computation required, and more risk of overfitting on small datasets.",
+      "decrease_effects": "Less ability to capture features, can lead to underfitting.",
+      "comparison": "Start small and increase if accuracy is low.",
+      "example_questions": [
+        "What is base_filters?",
+        "Should I increase filters?",
+        "Does base_filters affect speed?",
+        "How do filters affect accuracy?",
+        "How many filters should I use?"
+      ]
+    },
+    "kernel_size": {
+      "description": "Width and height of the convolution filter (e.g., 3x3 or 5x5). Controls how much of the image each filter 'sees' at once.",
+      "tips": "3 is standard. Use 5 for larger patterns or textures.",
+      "increase_effects": "Larger kernels capture broader patterns but may lose fine details and overfit.",
+      "decrease_effects": "More spatial detail and flexibility, allows stacking more layers.",
+      "comparison": "Try both and compare validation accuracy.",
+      "example_questions": [
+        "What is kernel_size?",
+        "Should I use 3x3 or 5x5?",
+        "How does kernel_size affect results?",
+        "Larger kernel size better?",
+        "Kernel size for image classification"
+      ]
+    },
+    "num_dense_layers": {
+      "description": "Number of dense (fully connected) layers after the convolutions. They combine features for the final prediction.",
+      "tips": "One dense layer is usually enough. Try two for complex problems.",
+      "increase_effects": "More combinations of features, but risk of overfitting increases.",
+      "decrease_effects": "May not capture complex relationships; possible underfitting.",
+      "comparison": "Add more layers only if needed. More isn't always better.",
+      "example_questions": [
+        "How many dense layers?",
+        "What is num_dense_layers?",
+        "Does adding dense layers help?",
+        "Dense layers and overfitting",
+        "Do I need more dense layers?"
+      ]
+    },
+    "dense_units": {
+      "description": "Number of neurons in each dense layer. More units can learn more complex relationships.",
+      "tips": "Start with 128 or 256. Increase if model underfits.",
+      "increase_effects": "Higher capacity to learn patterns, but can overfit and slow training.",
+      "decrease_effects": "Lower capacity, may underfit.",
+      "comparison": "More units = more parameters, but risk of overfitting. Try doubling or halving as a test.",
+      "example_questions": [
+        "What is dense_units?",
+        "How many units per dense layer?",
+        "Should I use 128 or 256 units?",
+        "Do more units mean better accuracy?",
+        "Dense units and model size"
+      ]
+    },
+    "dropout": {
+      "description": "Dropout randomly disables a fraction of neurons during training to help prevent overfitting. Range: 0 (no dropout) to 1 (all dropped).",
+      "tips": "Use 0.3–0.5 if your model overfits, less if underfits.",
+      "increase_effects": "Improves generalization, but too high can cause underfitting and slow learning.",
+      "decrease_effects": "Less regularization, may cause overfitting.",
+      "comparison": "Balance dropout with model size; more layers may need more dropout.",
+      "example_questions": [
+        "How much dropout should I use?",
+        "Does dropout prevent overfitting?",
+        "Should I set dropout to zero?",
+        "Dropout vs regularization?",
+        "Dropout for deep learning"
+      ]
+    },
+    "batch_size": {
+      "description": "Number of samples processed before model weights are updated. Affects training speed and generalization.",
+      "tips": "Use 32 or 64 for small/medium data. Lower if you run out of memory.",
+      "increase_effects": "Faster training, but may reduce generalization and use more memory.",
+      "decrease_effects": "Slower, noisier training, may improve generalization on small datasets.",
+      "comparison": "Bigger batch = faster, but may hurt generalization.",
+      "example_questions": [
+        "What is batch size?",
+        "Does batch size affect accuracy?",
+        "Should I use 32 or 64 batch size?",
+        "Best batch size for CNN?",
+        "Can batch size cause out of memory?"
+      ]
+    },
+    "epochs": {
+      "description": "Number of times the model sees the entire training data. More epochs = more training.",
+      "tips": "Start with 10–30. Use early stopping to avoid overfitting.",
+      "increase_effects": "Model learns more, but risks overfitting if too many.",
+      "decrease_effects": "May not train enough, leading to underfitting.",
+      "comparison": "Stop training if validation loss stops improving.",
+      "example_questions": [
+        "How many epochs should I train?",
+        "Does more epochs mean better model?",
+        "When to stop training?",
+        "Epochs and overfitting?",
+        "Can I use early stopping?"
+      ]
+    },
+    "learning_rate": {
+      "description": "Controls how much the model updates its weights after each batch. Crucial for model convergence.",
+      "tips": "Try 0.001 for Adam/RMSprop, 0.01 for SGD. Adjust if too slow or unstable.",
+      "increase_effects": "Faster training, but loss may diverge or fluctuate.",
+      "decrease_effects": "Slower, more stable learning, but may get stuck.",
+      "comparison": "Try a learning rate finder or adjust by a factor of 10.",
+      "example_questions": [
+        "How to set learning rate?",
+        "Learning rate too high?",
+        "Should I use a lower learning rate?",
+        "Why is my model not learning?",
+        "Learning rate for Adam"
+      ]
+    }
+  },
+
+  "concepts": {
+    "generalization": {
+      "description": "Generalization is the ability of a model to perform well on new, unseen data—not just the training set. A good model generalizes by capturing patterns rather than memorizing examples.",
+      "tips": "Monitor validation accuracy, not just training accuracy. Use dropout, regularization, and sufficient data to improve generalization.",
+      "comparison": "High generalization means similar accuracy on training and validation sets. Poor generalization means high accuracy on training but low on validation.",
+      "example_questions": [
+        "What is generalization in machine learning?",
+        "How can I make my model generalize better?",
+        "Why is my model not generalizing?",
+        "Difference between overfitting and generalization",
+        "How to improve generalization?"
+      ]
+    },
+    "overfitting": {
+      "description": "Overfitting happens when a model learns the training data too well—including its noise and outliers—resulting in poor performance on new data.",
+      "tips": "If training accuracy is much higher than validation accuracy, your model is overfitting. Use dropout, reduce model size, or add more data.",
+      "increase_effects": "Adding layers/units, or training too long without regularization, increases overfitting.",
+      "decrease_effects": "Using dropout, data augmentation, or simpler models helps reduce overfitting.",
+      "comparison": "Overfitting is the opposite of generalization.",
+      "example_questions": [
+        "What is overfitting?",
+        "How do I know if my model is overfitting?",
+        "How to prevent overfitting?",
+        "Signs of overfitting?",
+        "Why is validation accuracy lower than training?"
+      ]
+    },
+    "underfitting": {
+      "description": "Underfitting occurs when the model is too simple to capture the underlying pattern in the data. It performs poorly on both training and validation sets.",
+      "tips": "Try increasing model complexity (more layers/units), train longer, or reduce dropout.",
+      "increase_effects": "Too simple models, high dropout, or too few epochs can cause underfitting.",
+      "decrease_effects": "Add more model capacity or train longer to reduce underfitting.",
+      "comparison": "Underfitting means your model hasn't learned enough, while overfitting means it learned too much noise.",
+      "example_questions": [
+        "What is underfitting?",
+        "How do I fix underfitting?",
+        "Why is my model accuracy low?",
+        "Difference between underfitting and overfitting",
+        "How to know if model is underfitting?"
+      ]
+    },
+    "early_stopping": {
+      "description": "Early stopping is a technique where training is stopped automatically if validation loss does not improve for a set number of epochs, preventing overfitting.",
+      "tips": "Use early stopping in combination with validation loss to avoid over-training.",
+      "comparison": "Early stopping helps keep the best model instead of continuing until overfitting occurs.",
+      "example_questions": [
+        "What is early stopping?",
+        "Should I use early stopping?",
+        "How does early stopping prevent overfitting?",
+        "When to stop training?",
+        "Early stopping vs fixed epochs"
+      ]
+    },
+    "dropout_regularization": {
+      "description": "Dropout is a regularization technique where random neurons are turned off during training to force the network to be more robust and prevent overfitting.",
+      "tips": "Typical dropout rates are 0.2–0.5. If model overfits, try increasing dropout.",
+      "comparison": "Dropout is one of several regularization methods, alongside L1/L2 regularization.",
+      "example_questions": [
+        "What is dropout?",
+        "Why use dropout?",
+        "How does dropout help?",
+        "Dropout vs L2 regularization",
+        "What dropout rate should I use?"
+      ]
+    },
+    "learning_rate_schedule": {
+      "description": "A learning rate schedule automatically reduces the learning rate during training, often improving convergence and final model quality.",
+      "tips": "Lower the learning rate when the loss plateaus. Many frameworks have built-in schedulers.",
+      "comparison": "Fixed learning rate is simple, but scheduling often yields better results.",
+      "example_questions": [
+        "What is a learning rate schedule?",
+        "Should I reduce learning rate during training?",
+        "How to use learning rate scheduler?",
+        "Learning rate decay vs fixed rate"
+      ]
+    },
+    "data_augmentation": {
+      "description": "Data augmentation increases the size and diversity of your dataset by applying transformations like rotation, flipping, or color changes to images. This helps models generalize and reduces overfitting.",
+      "tips": "Use augmentation if your dataset is small or overfitting. Common for image tasks.",
+      "comparison": "Data augmentation is especially useful in computer vision tasks with limited data.",
+      "example_questions": [
+        "What is data augmentation?",
+        "Should I use data augmentation?",
+        "How does augmentation help with overfitting?",
+        "Best augmentations for images"
+      ]
+    }
+  },
+
+  "faq": {
+    "faq_how_to_choose_optimizer": {
+      "question": "How do I choose the best optimizer for my model?",
+      "answer": "Adam is a robust default optimizer because it adapts learning rates and converges quickly. SGD is simple and can generalize well with careful tuning, while RMSprop is helpful for unstable or sequence data. Start with Adam, then experiment as needed.",
+      "example_questions": [
+        "Which optimizer is better?",
+        "Should I use Adam or SGD?",
+        "What is the difference between Adam and RMSprop?",
+        "What optimizer should I pick?",
+        "Why use RMSprop instead of Adam?",
+        "Optimizer for image classification?"
+      ]
+    },
+    "faq_best_activation_function": {
+      "question": "Which activation function should I use?",
+      "answer": "For most hidden layers, ReLU is recommended. Leaky ReLU helps if you see many dead neurons. Use sigmoid for binary outputs and tanh if your data is centered. Avoid sigmoid and tanh in deep hidden layers.",
+      "example_questions": [
+        "Best activation function?",
+        "Should I use relu, tanh, or sigmoid?",
+        "Why use relu over sigmoid?",
+        "When to use leaky relu?",
+        "Difference between relu and tanh"
+      ]
+    },
+    "faq_what_is_batch_size": {
+      "question": "What does batch size do?",
+      "answer": "Batch size is the number of samples processed before updating the model weights. Larger batches train faster and use more memory, but may generalize worse. Smaller batches may improve generalization but make training noisier and slower.",
+      "example_questions": [
+        "How does batch size affect accuracy?",
+        "Best batch size for CNN?",
+        "Should I use batch size 32 or 64?",
+        "Batch size and GPU memory?",
+        "Why change batch size?"
+      ]
+    },
+    "faq_why_use_dropout": {
+      "question": "Why should I use dropout?",
+      "answer": "Dropout randomly disables a fraction of neurons during training, which helps prevent overfitting and improves generalization. It's especially useful in deep or large networks.",
+      "example_questions": [
+        "Does dropout prevent overfitting?",
+        "How does dropout work?",
+        "Should I set dropout to zero?",
+        "Dropout or regularization?",
+        "Dropout for CNN"
+      ]
+    },
+    "faq_categorical_vs_sparse_crossentropy": {
+      "question": "When should I use categorical_crossentropy vs sparse_categorical_crossentropy?",
+      "answer": "Use categorical_crossentropy if your class labels are one-hot encoded arrays. Use sparse_categorical_crossentropy if your class labels are integers (e.g., 0, 1, 2...). Both are for multi-class classification, but depend on label encoding.",
+      "example_questions": [
+        "Difference between categorical and sparse crossentropy?",
+        "What is one-hot encoding?",
+        "Can I use integer labels?",
+        "Which loss function for multi-class?",
+        "Sparse vs categorical loss"
+      ]
+    },
+    "faq_how_many_epochs": {
+      "question": "How many epochs should I train for?",
+      "answer": "10–30 epochs is a typical starting point for CIFAR-10. Use early stopping if available. More epochs can help, but overfitting may occur. Monitor validation accuracy.",
+      "example_questions": [
+        "Best number of epochs?",
+        "Does more epochs mean better model?",
+        "When should I stop training?",
+        "Epochs and overfitting?",
+        "How to know when to stop?"
+      ]
+    },
+    "faq_validation_accuracy": {
+      "question": "What is validation accuracy, and why is it important?",
+      "answer": "Validation accuracy measures model performance on unseen data during training. It indicates how well the model generalizes. If much lower than training accuracy, your model may be overfitting.",
+      "example_questions": [
+        "Why is validation accuracy important?",
+        "Validation vs training accuracy?",
+        "Low validation accuracy?",
+        "How to improve validation accuracy?",
+        "Validation accuracy not improving"
+      ]
+    },
+    "faq_why_no_improvement": {
+      "question": "Why doesn't my model's accuracy improve?",
+      "answer": "Common causes include inappropriate learning rate, insufficient model complexity, poor data quality, or not enough epochs. Try adjusting hyperparameters one at a time and review your data for issues.",
+      "example_questions": [
+        "Why is my model not learning?",
+        "Model accuracy stuck?",
+        "How to make model learn faster?",
+        "No improvement in loss?",
+        "Model is not improving"
+      ]
+    },
+    "faq_layers_vs_units": {
+      "question": "Should I add more layers or more units per layer?",
+      "answer": "Both increase model capacity, but also risk overfitting. Start simple, and add either more layers or more units if your model underfits. Always monitor validation performance.",
+      "example_questions": [
+        "Add layers or units for better accuracy?",
+        "How to make model more complex?",
+        "Should I increase neurons?",
+        "Layers vs units in neural network"
+      ]
+    },
+    "faq_how_to_reduce_overfitting": {
+      "question": "How can I reduce overfitting?",
+      "answer": "Increase dropout, use early stopping, reduce model complexity, collect more data, or apply data augmentation. Overfitting is seen when training accuracy is much higher than validation accuracy.",
+      "example_questions": [
+        "How to fix overfitting?",
+        "Why is my model overfitting?",
+        "Reduce overfitting in CNN?",
+        "How does dropout help overfitting?",
+        "Overfitting solutions"
+      ]
+    },
+    "faq_how_to_fix_underfitting": {
+      "question": "How can I fix underfitting?",
+      "answer": "Increase model complexity (more layers or units), train longer, reduce dropout, or try different activation functions. Underfitting is when both training and validation accuracy are low.",
+      "example_questions": [
+        "Why is my model underfitting?",
+        "Increase model complexity?",
+        "How to improve training accuracy?",
+        "Model not learning enough"
+      ]
+    },
+    "faq_how_to_choose_learning_rate": {
+      "question": "How do I choose the learning rate?",
+      "answer": "Start with 0.001 for Adam or RMSprop, or 0.01 for SGD. If the loss doesn't decrease or fluctuates, lower the learning rate. If too slow, try increasing it slightly. Experiment to find the optimal value.",
+      "example_questions": [
+        "Best learning rate for Adam?",
+        "Should I lower my learning rate?",
+        "How to know if learning rate is too high?",
+        "Learning rate too low?"
+      ]
+    },
+    "faq_when_more_data": {
+      "question": "How do I know if I need more training data?",
+      "answer": "If validation accuracy doesn't improve and your model overfits easily, your dataset may be too small. Collecting more diverse training data helps generalization.",
+      "example_questions": [
+        "Do I need more data?",
+        "How to increase dataset size?",
+        "Why is my model overfitting on small data?",
+        "Does more data help accuracy?"
+      ]
+    },
+    "faq_how_to_avoid_vanishing_gradients": {
+      "question": "How can I avoid vanishing gradients?",
+      "answer": "Use ReLU or leaky_relu in hidden layers. Avoid sigmoid/tanh in deep networks. Proper weight initialization and batch normalization can also help.",
+      "example_questions": [
+        "What causes vanishing gradients?",
+        "How to fix vanishing gradients?",
+        "Best activations to avoid vanishing gradients?",
+        "Vanishing gradients in deep learning"
+      ]
+    },
+    "faq_should_i_shuffle_data": {
+      "question": "Should I shuffle my training data?",
+      "answer": "Yes. Shuffling prevents the model from learning spurious patterns from the data order. Always shuffle at each epoch.",
+      "example_questions": [
+        "Why shuffle training data?",
+        "What if I don't shuffle data?",
+        "Data shuffling in neural networks",
+        "Does order of data matter?"
+      ]
+    },
+    "faq_batch_size_learning_rate": {
+      "question": "What is the relationship between batch size and learning rate?",
+      "answer": "Larger batch sizes sometimes allow higher learning rates. With small batches, use a lower learning rate to avoid instability. Always monitor training curves when adjusting both.",
+      "example_questions": [
+        "Does batch size affect learning rate?",
+        "Can I use large batch and high learning rate?",
+        "Best batch size/learning rate combo?",
+        "Batch size vs learning rate tradeoff"
+      ]
+    },
+    "faq_how_to_interpret_training_curves": {
+      "question": "How do I interpret loss and accuracy curves?",
+      "answer": "If both training and validation loss decrease and accuracy increases, the model is learning. If validation loss stops decreasing while training loss keeps dropping, the model may be overfitting.",
+      "example_questions": [
+        "What does training curve mean?",
+        "Training vs validation loss?",
+        "Why is validation loss increasing?",
+        "How to read accuracy curves?"
+      ]
+    },
+    "faq_when_stop_training": {
+      "question": "How do I know when to stop training?",
+      "answer": "Stop if validation loss stops improving for several epochs, or if validation accuracy plateaus or drops. Use early stopping if available.",
+      "example_questions": [
+        "When should I stop training?",
+        "Early stopping criteria?",
+        "How many epochs is enough?",
+        "Training not improving?"
+      ]
+    },
+    "faq_what_is_early_stopping": {
+      "question": "What is early stopping and why use it?",
+      "answer": "Early stopping halts training when validation loss hasn't improved for a set number of epochs, preventing overfitting and saving time.",
+      "example_questions": [
+        "How does early stopping work?",
+        "Should I always use early stopping?",
+        "Early stopping vs patience",
+        "When is early stopping triggered?"
+      ]
+    }
+  },
+
+  "troubleshooting": {
+    "troubleshoot_loss_nan": {
+      "problem": "My model's loss is 'nan' or 'infinity' during training.",
+      "solution": "This usually means the learning rate is too high, or your data has extreme values or missing values (NaN). Try lowering the learning rate and check your data for invalid or missing values. Ensure labels are correctly formatted.",
+      "example_questions": [
+        "Why is my loss nan?",
+        "How do I fix nan loss?",
+        "Loss becomes infinity during training",
+        "My model crashes with nan loss",
+        "Getting inf loss in deep learning"
+      ]
+    },
+    "troubleshoot_accuracy_stuck": {
+      "problem": "My model's accuracy is stuck and doesn't improve.",
+      "solution": "Try increasing model complexity (more layers or units), train for more epochs, or adjust the learning rate. Also, check your data and label preprocessing for bugs.",
+      "example_questions": [
+        "Accuracy not improving?",
+        "Model accuracy stuck at 10%",
+        "How to increase model accuracy?",
+        "Why does my model never learn?",
+        "Loss not decreasing"
+      ]
+    },
+    "troubleshoot_overfitting": {
+      "problem": "Validation accuracy is much lower than training accuracy.",
+      "solution": "Increase dropout, reduce model size, collect more data, or use early stopping. Data augmentation can also help if working with images.",
+      "example_questions": [
+        "Training accuracy high, validation low",
+        "Overfitting problem in my model",
+        "Why is validation accuracy much lower?",
+        "How to fix overfitting?",
+        "Validation loss increases"
+      ]
+    },
+    "troubleshoot_underfitting": {
+      "problem": "Both training and validation accuracy are low.",
+      "solution": "Increase model complexity by adding more layers or units, train for more epochs, or reduce dropout if it's high.",
+      "example_questions": [
+        "Model not learning anything",
+        "Underfitting issues",
+        "Both training and validation accuracy are low",
+        "How to fix underfitting?",
+        "Why is my model underfitting?"
+      ]
+    },
+    "troubleshoot_out_of_memory": {
+      "problem": "Training runs out of memory (RAM or GPU).",
+      "solution": "Reduce batch size, use fewer filters or dense units, or simplify the model. Also, close unnecessary programs and clear GPU memory before training.",
+      "example_questions": [
+        "Out of memory during training",
+        "GPU memory error in TensorFlow",
+        "How to avoid OOM errors?",
+        "Training fails with memory error",
+        "Reduce batch size for memory"
+      ]
+    },
+    "troubleshoot_loss_not_decreasing": {
+      "problem": "Loss does not decrease during training.",
+      "solution": "Learning rate may be too high or too low, or the optimizer may not be suitable. Try a different optimizer (e.g., Adam), adjust learning rate, or check data for errors.",
+      "example_questions": [
+        "Loss stuck during training",
+        "Why is loss not decreasing?",
+        "Model not converging",
+        "How to make loss go down?",
+        "Change optimizer for better loss"
+      ]
+    },
+    "troubleshoot_same_class_predictions": {
+      "problem": "Model predicts the same class for all inputs.",
+      "solution": "This could mean your labels are unbalanced, learning rate is not optimal, or the model is too simple. Try balancing the dataset, adjusting learning rate, or making the model more complex.",
+      "example_questions": [
+        "Model predicts only one class",
+        "Why does model output same class?",
+        "Predictions are not changing",
+        "How to fix single-class predictions?",
+        "All outputs are the same"
+      ]
+    },
+    "troubleshoot_shape_mismatch_error": {
+      "problem": "Shape mismatch error during training or evaluation.",
+      "solution": "Check your input shapes (e.g., 32x32x3 for CIFAR-10) and make sure your labels match your loss function (integer for sparse, one-hot for categorical).",
+      "example_questions": [
+        "Shape mismatch error in keras",
+        "Wrong input shape for model",
+        "How to fix shape error?",
+        "Label shape and loss mismatch",
+        "Model expects different input size"
+      ]
+    },
+    "troubleshoot_labels_incorrect_format": {
+      "problem": "Error about label format or loss function.",
+      "solution": "Use one-hot encoding for categorical_crossentropy, integer labels for sparse_categorical_crossentropy.",
+      "example_questions": [
+        "Loss function label error",
+        "Categorical crossentropy with integers?",
+        "How to encode labels for loss?",
+        "Label format for classification",
+        "Keras label format error"
+      ]
+    },
+    "troubleshoot_training_very_slow": {
+      "problem": "Training is much slower than expected.",
+      "solution": "Reduce batch size or model size, close other applications, or use a machine with a GPU. Remove large print statements from your training loop.",
+      "example_questions": [
+        "Why is training so slow?",
+        "How to speed up model training?",
+        "Training time is too long",
+        "Model takes hours to train",
+        "Speed up deep learning"
+      ]
+    },
+    "troubleshoot_predictions_random": {
+      "problem": "Model predictions are random or very poor.",
+      "solution": "Check learning rate, model complexity, data and label correctness, and number of training epochs.",
+      "example_questions": [
+        "Model predicts randomly",
+        "Predictions are always wrong",
+        "Why is accuracy near random?",
+        "How to improve predictions?",
+        "Accuracy stuck at random chance"
+      ]
+    },
+    "troubleshoot_crashes": {
+      "problem": "Training crashes with unknown errors.",
+      "solution": "Check for corrupted data, out-of-memory issues, and make sure dependencies (e.g., TensorFlow, Keras) are up to date. Review error logs for clues.",
+      "example_questions": [
+        "Training crashes suddenly",
+        "Unknown error during training",
+        "How to debug model crashes?",
+        "App crashes on epoch start",
+        "Crash in keras model training"
+      ]
+    },
+    "troubleshoot_no_improvement_after_tuning": {
+      "problem": "No improvement after tuning hyperparameters.",
+      "solution": "Change only one hyperparameter at a time, keep a log of results, and check data quality. Sometimes multiple small changes work better than drastic ones.",
+      "example_questions": [
+        "Tuning hyperparameters doesn't help",
+        "How to improve after tuning?",
+        "No change after parameter adjustment",
+        "Why is model not improving?",
+        "Still stuck after hyperparameter search"
+      ]
+    },
+    "troubleshoot_incorrect_num_classes": {
+      "problem": "Output shape or loss complains about wrong number of classes.",
+      "solution": "Ensure your final Dense layer has as many units as classes (e.g., 10 for CIFAR-10), and your label encoding matches the loss function.",
+      "example_questions": [
+        "Wrong number of output classes",
+        "Dense layer units mismatch",
+        "How to set output layer size?",
+        "Model output shape error",
+        "Label shape doesn't match output"
+      ]
+    },
+    "troubleshoot_dropout_not_effective": {
+      "problem": "Dropout doesn't seem to help with overfitting.",
+      "solution": "Try gradually increasing the dropout rate (0.3–0.5). If overfitting persists, reduce model complexity or collect more data.",
+      "example_questions": [
+        "Dropout not helping overfitting",
+        "Should I use higher dropout?",
+        "When does dropout work?",
+        "Dropout and regularization",
+        "Still overfitting with dropout"
+      ]
+    }
+  }
+}

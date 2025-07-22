@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test your model - CIFAR-10 Classifier</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .img-hover:hover {
+      transform: scale(1.2);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .prediction-box {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: white;
+      border: 2px solid #3b82f6;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      animation: fadeIn 0.4s ease-out;
+      z-index: 100;
+      width: 300px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .prediction-box img {
+      max-width: 64px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 p-6">
+  <div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-xl">
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-700">Test your model</h1>
+
+    <!-- Accuracy and Loss -->
+    <div class="mb-6 grid grid-cols-2 gap-6 text-center">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-700">Final Accuracy</h2>
+        <p class="text-3xl text-green-600 font-bold">{{ accuracy | round(4) }}</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold text-gray-700">Final Loss</h2>
+        <p class="text-3xl text-red-600 font-bold">{{ loss | round(4) }}</p>
+      </div>
+    </div>
+
+    <!-- Training Curves -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div>
+        <h2 class="text-lg font-semibold mb-2 text-center">Accuracy Curve</h2>
+        <img src="{{ url_for('static', filename='plots/accuracy_curve.png') }}" alt="Accuracy Curve" class="rounded border">
+      </div>
+      <div>
+        <h2 class="text-lg font-semibold mb-2 text-center">Loss Curve</h2>
+        <img src="{{ url_for('static', filename='plots/loss_curve.png') }}" alt="Loss Curve" class="rounded border">
+      </div>
+    </div>
+
+    <!-- Confusion Matrix -->
+    <div class="mb-10">
+      <h2 class="text-xl font-semibold mb-3 text-center">Confusion Matrix</h2>
+      <img src="{{ url_for('static', filename='plots/confusion_matrix.png') }}" alt="Confusion Matrix" class="rounded mx-auto border shadow">
+    </div>
+
+    <!-- Model Testing Interaction -->
+    <div>
+      <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Test your model</h2>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
+        {% for class_name in class_names %}
+          <div>
+            <h3 class="text-center font-semibold text-gray-700 mb-2">{{ class_name }}</h3>
+            {% for i in range(5) %}
+              <div class="mb-3 text-center">
+                <img src="{{ url_for('static', filename='correct_examples/' + class_name|lower + '_' + i|string + '.png') }}"
+                     alt="{{ class_name }} {{ i }}"
+                     class="rounded shadow-md img-hover mx-auto"
+                     style="width: 80px; height: 80px;"
+                     data-filename="{{ class_name|lower }}_{{ i }}.png"
+                     onclick="predictImage(this)">
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Prediction Box -->
+  <div id="predictionBox" class="prediction-box">
+    <div class="text-center mb-2">
+      <img id="selectedImage" src="" alt="Selected Image">
+    </div>
+    <p class="text-sm text-gray-600">Prediction: <strong id="predictedLabel"></strong></p>
+    <p class="text-sm text-gray-600">Confidence: <span id="predictedConfidence"></span>%</p>
+  </div>
+
+  <script>
+    function predictImage(imgElement) {
+      const filename = imgElement.getAttribute("data-filename");
+
+      fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: filename })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const predictionBox = document.getElementById("predictionBox");
+        const predictedLabel = document.getElementById("predictedLabel");
+        const predictedConfidence = document.getElementById("predictedConfidence");
+        const selectedImage = document.getElementById("selectedImage");
+
+        if (data.error) {
+          predictedLabel.textContent = "Error";
+          predictedConfidence.textContent = data.error;
+        } else {
+          predictedLabel.textContent = data.prediction;
+          predictedConfidence.textContent = data.confidence.toFixed(2);
+        }
+
+        selectedImage.src = imgElement.src;
+        predictionBox.style.display = "block";
+      });
+    }
+  </script>
+  {% include 'chatbox.html' %}
+</body>
+</html>

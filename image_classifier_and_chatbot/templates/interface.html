@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CIFAR-10 Model Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-xl">
+    <h1 class="text-3xl font-bold mb-6 text-center">CIFAR-10 Model Configuration</h1>
+
+    <form method="post" action="/train" class="space-y-4">
+      <!-- Convolutional Layers -->
+      <div>
+        <label class="font-semibold">Number of Convolutional Layers</label>
+        <input type="range" name="num_conv_layers" min="1" max="5" value="2" class="w-full">
+        <div class="text-sm">Range: 1 to 5</div>
+      </div>
+
+      <!-- Base Filters -->
+      <div>
+        <label class="font-semibold">Base Filters</label>
+        <input type="range" name="base_filters" min="16" max="128" step="16" value="32" class="w-full">
+        <div class="text-sm">Range: 16 to 128 (Multiples of 16)</div>
+      </div>
+
+      <!-- Kernel Size -->
+      <div>
+        <label class="font-semibold">Kernel Size</label>
+        <select name="kernel_size" class="w-full p-2 border rounded">
+          <option value="3" selected>3x3</option>
+          <option value="5">5x5</option>
+        </select>
+      </div>
+
+      <!-- Dense Layers -->
+      <div>
+        <label class="font-semibold">Number of Dense Layers</label>
+        <input type="range" name="num_dense_layers" min="1" max="3" value="1" class="w-full">
+      </div>
+
+      <!-- Units per Dense Layer -->
+      <div>
+        <label class="font-semibold">Units per Dense Layer</label>
+        <input type="number" name="dense_units" min="16" max="512" value="128" class="w-full p-2 border rounded">
+      </div>
+
+      <!-- Dropout -->
+      <div>
+        <label class="font-semibold">Dropout</label>
+        <input type="range" name="dropout" min="0" max="1" step="0.05" value="0.5" class="w-full">
+      </div>
+
+      <!-- Activation Function -->
+      <div>
+        <label class="font-semibold">Activation Function</label>
+        <select name="activation" class="w-full p-2 border rounded">
+          <option value="relu">ReLU</option>
+          <option value="tanh">Tanh</option>
+          <option value="sigmoid">Sigmoid</option>
+          <option value="leaky_relu">Leaky ReLU</option>
+        </select>
+      </div>
+
+      <!-- Optimizer -->
+      <div>
+        <label class="font-semibold">Optimizer</label>
+        <select name="optimizer" class="w-full p-2 border rounded">
+          <option value="adam">Adam</option>
+          <option value="sgd">SGD</option>
+          <option value="rmsprop">RMSprop</option>
+        </select>
+      </div>
+
+      <!-- Loss Function -->
+      <div>
+        <label class="font-semibold">Loss Function</label>
+        <select name="loss" class="w-full p-2 border rounded">
+          <option value="categorical_crossentropy">Categorical Crossentropy</option>
+          <option value="sparse_categorical_crossentropy">Sparse Categorical Crossentropy</option>
+        </select>
+      </div>
+
+      <!-- Learning Rate -->
+      <div>
+        <label class="font-semibold">Learning Rate</label>
+        <input type="number" name="learning_rate" step="0.0001" value="0.001" max="1" class="w-full p-2 border rounded">
+      </div>
+
+      <!-- Batch Size -->
+      <div>
+        <label class="font-semibold">Batch Size</label>
+        <input type="number" name="batch_size" min="8" max="64" value="32" step="8" class="w-full p-2 border rounded">
+      </div>
+
+      <!-- Epochs -->
+      <div>
+        <label class="font-semibold">Epochs</label>
+        <input type="number" name="epochs" min="1" max="30" value="10" class="w-full p-2 border rounded">
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-300">
+          Train Model
+        </button>
+      </div>
+    </form>
+  </div>
+  {% include 'chatbox.html' %}
+</body>
+</html>

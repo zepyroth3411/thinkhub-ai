@@ -1,0 +1,42 @@
+import os
+import tensorflow
+import numpy as np
+import matplotlib.pyplot as plt
+from tensorflow.keras.datasets import cifar10
+from tensorflow.keras.utils import to_categorical
+
+# Base config
+OUTPUT_DIR = "static/correct_examples"
+IMAGES_PER_CLASS = 10
+CLASS_NAMES = ['Airplane', 'Car', 'Bird', 'Cat', 'Deer',
+               'Dog', 'Frog', 'Horse', 'Boat', 'Truck']
+
+# Creates folder if it does not exist
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# Loads CIFAR-10 data 
+(_, _), (x_test, y_test) = cifar10.load_data()
+x_test = x_test / 255.0
+y_test_cat = to_categorical(y_test, 10)
+
+# Model simulation
+y_pred = y_test.flatten()  
+
+# Dictionari of images per class 
+saved = {i: 0 for i in range(10)}
+
+# Create images_properly classified
+for i in range(len(x_test)):
+    true_label = y_test[i][0]
+    pred_label = y_pred[i]  
+
+    if true_label == pred_label and saved[true_label] < IMAGES_PER_CLASS:
+        filename = f"{CLASS_NAMES[true_label]}_{saved[true_label]}.png".lower()
+        filepath = os.path.join(OUTPUT_DIR, filename)
+        plt.imsave(filepath, x_test[i])
+        saved[true_label] += 1
+
+    if all(v >= IMAGES_PER_CLASS for v in saved.values()):
+        break
+
+print("Images generated.", OUTPUT_DIR)
