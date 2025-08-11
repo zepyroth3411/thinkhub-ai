@@ -13,6 +13,9 @@ import SummarizerModal from "@/components/SummarizerModal";
 import { RiEmotionLaughFill } from "react-icons/ri";
 import { LuMessageCircleCode } from "react-icons/lu";
 import { LuNotebookPen } from "react-icons/lu";
+import ChatbotModal from "@/components/ChatbotModal";
+import { LuBrainCircuit } from "react-icons/lu";
+import ChatbotHistoryPanel from "@/components/ChatbotHistorialModal";
 
 export default function Models() {
   return (
@@ -56,8 +59,30 @@ export default function Models() {
             icon={<LuNotebookPen />}
             MainComponent={SummarizerModal}
           />
-          <ModelCard></ModelCard>
-          <ModelCard></ModelCard>
+
+          <ModelAccordionModal
+            title="Chatbot"
+            icon={<LuBrainCircuit />}
+            MainComponent={ChatbotModal}
+            mainProps={{
+              embedded: true,
+              title: "Chatbot",
+              onAsk: async (q) => {
+                const res = await fetch("/api/chatbot", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ prompt: q }),
+                });
+                const json = await res.json(); // { response: "..." } ó string
+                return json; // el componente acepta string o {response}
+              },
+            }}
+            accordionLabel="Open History"
+            AccordionComponent={ChatbotHistoryPanel}
+          />
+          <ModelCard>
+            <ChatbotModal />
+          </ModelCard>
         </section>
       </div>
 
