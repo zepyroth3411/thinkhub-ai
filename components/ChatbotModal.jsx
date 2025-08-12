@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import { FiSend, FiRotateCcw, FiMessageCircle } from "react-icons/fi";
 
-export default function ChatbotQA({ title = "Chatbot" }) {
+export default function ChatbotQA({ title = "Chatbot", onAfterAnswer }) {
   const [prompt, setPrompt] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,11 +29,21 @@ export default function ChatbotQA({ title = "Chatbot" }) {
       const { data } = await axios.post(url, payload, {
         headers: { "Content-Type": "application/json" },
       });
+
       const botText = data?.current?.bot || data?.response || "";
       setAnswer(botText);
+
+      // ✅ Notifica al padre con el payload completo (o fallback sin historial)
+      onAfterAnswer?.({
+        current: data?.current ?? { user: payload.question, bot: botText },
+        recent_history: Array.isArray(data?.recent_history) ? data.recent_history : [],
+      });
     } catch (err) {
       console.error("❌ Chatbot request failed:", err);
       setError("No se pudo consultar el chatbot");
+
+      // ✅ Si quieres limpiar el panel de historial en error:
+      onAfterAnswer?.({ current: null, recent_history: [] });
     } finally {
       setLoading(false);
       setPrompt("");

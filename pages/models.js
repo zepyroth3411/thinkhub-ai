@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import DockNavbar from "@/components/DockNavbar";
 import dockItems from "@/config/dockItems";
 import Aurora from "@/components/Aurora";
@@ -10,14 +12,19 @@ import ModelAccordionModal from "@/components/ModelAccordion";
 import SpamModal from "@/components/SpamModal";
 import SpamRetrainModal from "@/components/SpamRetrainModal";
 import SummarizerModal from "@/components/SummarizerModal";
+
 import { RiEmotionLaughFill } from "react-icons/ri";
-import { LuMessageCircleCode } from "react-icons/lu";
-import { LuNotebookPen } from "react-icons/lu";
-import ChatbotModal from "@/components/ChatbotModal";
-import { LuBrainCircuit } from "react-icons/lu";
+import { LuMessageCircleCode, LuNotebookPen, LuBrainCircuit } from "react-icons/lu";
+
+// ⬇️ Chatbot (solo pregunta/respuesta)
+import ChatbotQA from "@/components/ChatbotModal";
+// ⬇️ Panel de historial (usa el nombre real del archivo)
 import ChatbotHistoryPanel from "@/components/ChatbotHistorialModal";
 
 export default function Models() {
+  // estado local para el historial que mostrará el acordeón
+  const [chatHistory, setChatHistory] = useState([]);
+
   return (
     <main className="text-white overflow-x-hidden px-4 flex flex-col min-h-screen">
       <Aurora
@@ -39,7 +46,6 @@ export default function Models() {
 
         {/* Models Grid */}
         <section className="py-8 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
-          {/* Cards aquí */}
           <ModelAccordionModal
             title="Emotion Analyzer"
             icon={<RiEmotionLaughFill />}
@@ -47,6 +53,7 @@ export default function Models() {
             AccordionComponent={EmotionRetrainModal}
             accordionLabel="Open Retrain Tool"
           />
+
           <ModelAccordionModal
             title="Spam Detector"
             icon={<LuMessageCircleCode />}
@@ -54,35 +61,34 @@ export default function Models() {
             AccordionComponent={SpamRetrainModal}
             accordionLabel="Open Retrain Tool"
           />
+
           <ModelAccordionModal
             title="Text Summarizer"
             icon={<LuNotebookPen />}
             MainComponent={SummarizerModal}
           />
 
+          {/* === Chatbot con historial en el acordeón === */}
           <ModelAccordionModal
             title="Chatbot"
             icon={<LuBrainCircuit />}
-            MainComponent={ChatbotModal}
+            MainComponent={ChatbotQA}
+            AccordionComponent={ChatbotHistoryPanel}
+            accordionLabel="Open History"
             mainProps={{
-              embedded: true,
               title: "Chatbot",
-              onAsk: async (q) => {
-                const res = await fetch("/api/chatbot", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ prompt: q }),
-                });
-                const json = await res.json(); // { response: "..." } ó string
-                return json; // el componente acepta string o {response}
+              onAfterAnswer: (payload) => {
+                const recent = Array.isArray(payload?.recent_history)
+                  ? payload.recent_history
+                  : [];
+                setChatHistory(recent);
               },
             }}
-            accordionLabel="Open History"
-            AccordionComponent={ChatbotHistoryPanel}
+            accordionProps={{
+              history: chatHistory,
+              title: "Recent Q&A",
+            }}
           />
-          <ModelCard>
-            <ChatbotModal />
-          </ModelCard>
         </section>
       </div>
 
