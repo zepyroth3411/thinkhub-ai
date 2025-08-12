@@ -12,14 +12,13 @@ import ModelAccordionModal from "@/components/ModelAccordion";
 import SpamModal from "@/components/SpamModal";
 import SpamRetrainModal from "@/components/SpamRetrainModal";
 import SummarizerModal from "@/components/SummarizerModal";
+import ChatbotQA from "@/components/ChatbotModal";
+import ChatbotHistoryPanel from "@/components/ChatbotHistorialModal";
 
 import { RiEmotionLaughFill } from "react-icons/ri";
 import { LuMessageCircleCode, LuNotebookPen, LuBrainCircuit } from "react-icons/lu";
 
-// ⬇️ Chatbot (solo pregunta/respuesta)
-import ChatbotQA from "@/components/ChatbotModal";
-// ⬇️ Panel de historial (usa el nombre real del archivo)
-import ChatbotHistoryPanel from "@/components/ChatbotHistorialModal";
+
 
 export default function Models() {
   // estado local para el historial que mostrará el acordeón
