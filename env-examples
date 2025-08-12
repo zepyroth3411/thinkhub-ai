@@ -1,0 +1,5 @@
+NEXT_PUBLIC_API_BASE=http://172.16.64.96:5001/
+#Backend puerto 5001
+#Microservicio de chatbot puerto 5000
+#Wip Microservicio de imagenes puerto 5002
+#Variable de entorno para la URL base del backend, cambiar según la configuración local siendo la ipv4 del servidor backend.
